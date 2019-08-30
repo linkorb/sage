@@ -34,8 +34,6 @@ class Record implements ArrayAccess
         if (array_key_exists($offset, $this->data)) {
             return $this->data[$offset];
         }
-        // echo "DATA:\n";
-        // print_r($this->data);
         throw new Exception\FieldNotFoundException($this->typeName . '.' . $offset);
     }
 
@@ -48,5 +46,14 @@ class Record implements ArrayAccess
     {
         unset($this->data[$offset]);
     }
+
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    public function getKeys()
+    {
+        return array_keys($this->data);
     }
 }
