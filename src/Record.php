@@ -41,10 +41,12 @@ class Record implements ArrayAccess
 
     public function offsetSet($offset, $value)
     {
-        throw new Exception\ImmutableException("set");
+        $this->data[$offset] = $value;
+        return $this;
     }
     public function offsetUnset($offset)
     {
-        throw new Exception\ImmutableException("unset");
+        unset($this->data[$offset]);
+    }
     }
 }
