@@ -16,7 +16,7 @@ class Condition
         return $this->fieldName;
     }
 
-    public function getOperator()
+    public function getOperator(): string
     {
         return $this->operator;
     }
@@ -24,6 +24,11 @@ class Condition
     public function getValue()
     {
         return $this->value;
+    }
+
+    public function __toString()
+    {
+        return $this->getFieldName() . $this->getOperator() . $this->getValue();
     }
     
 }

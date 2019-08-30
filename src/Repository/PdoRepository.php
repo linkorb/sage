@@ -15,12 +15,7 @@ class PdoRepository extends AbstractRepository implements RepositoryInterface
         $this->name = $name;
     }
     
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    protected function getRowsWhere(array $conditions = []): array
+    public function getRowsWhere(array $conditions = []): array
     {
         $where = $this->buildWhere($conditions);
 

@@ -47,4 +47,25 @@ class Sage
         }
         return $this->virtualFields[$typeName][$fieldName];
     }
+
+    public function dump($data)
+    {
+        if (is_null($data)) {
+            echo "#NULL#" . PHP_EOL;
+            return;
+        }
+        if (is_a($data, Record::class)) {
+            print_r($data->getData());
+            return;
+        }
+
+        if (is_array($data)) {
+            echo "ROWS: " . count($data) . PHP_EOL;
+            foreach ($data as $row) {
+                $this->dump($row);
+            }
+            return;
+        }
+        throw new RuntimeException("Unsupported input");
+    }
 }
