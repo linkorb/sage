@@ -41,4 +41,27 @@ abstract class AbstractRepository
         }
         return $records;
     }
+
+    protected function match(array $row, array $conditions = []): bool
+    {
+        $match = true;
+        foreach ($conditions as $condition) {
+            $value = $condition->getValue();
+            $fieldValue = $row[$condition->getFieldName()];
+            switch ($condition->getOperator()) {
+                case '==':
+                    if ($fieldValue == $value) {
+                        // ok
+                    } else {
+                        $match = false;
+                    }
+                    break;
+                default:
+                    throw new RuntimeException("Unsupported operator");
+                    break;
+            }
+        }
+        return $match;
+    }
+
 }
