@@ -64,7 +64,7 @@ abstract class AbstractRepository
                     }
                     break;
                 default:
-                    throw new RuntimeException("Unsupported operator");
+                    throw new Exception\UnsupportedOperatorException("Unsupported operator " . $condition->getOperator());
                     break;
             }
         }
