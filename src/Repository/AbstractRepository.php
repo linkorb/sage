@@ -56,6 +56,13 @@ abstract class AbstractRepository
                         $match = false;
                     }
                     break;
+                case '!=':
+                    if ($fieldValue != $value) {
+                        // ok
+                    } else {
+                        $match = false;
+                    }
+                    break;
                 default:
                     throw new RuntimeException("Unsupported operator");
                     break;
