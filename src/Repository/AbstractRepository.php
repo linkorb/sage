@@ -24,7 +24,11 @@ abstract class AbstractRepository
     {
         $records = $this->findAll($conditions);
         if (count($records)==0) {
-            throw new Exception\RecordNotFoundException($this->getName());
+            $conditionsText = '';
+            foreach ($conditions as $condition) {
+                $conditionsText .= (string)$condition . ' ';
+            }
+            throw new Exception\RecordNotFoundException($this->getName() . ': ' . $conditionsText);
         }
         if (count($records)>1) {
             throw new Exception\RecordNotUniqueException($this->getName());
