@@ -50,8 +50,8 @@ abstract class AbstractRepository
     {
         $match = true;
         foreach ($conditions as $condition) {
-            $value = $condition->getValue();
-            $fieldValue = $row[$condition->getFieldName()];
+            $value = (string)trim($condition->getValue());
+            $fieldValue = (string)trim($row[$condition->getFieldName()]);
             switch ($condition->getOperator()) {
                 case '==':
                     if ($fieldValue == $value) {
