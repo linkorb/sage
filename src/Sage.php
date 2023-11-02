@@ -8,6 +8,10 @@ use Sage\Exception;
 
 class Sage
 {
+    protected $name;
+    protected $title;
+    protected $about;
+
     protected $repositories = [];
     protected $virtualFields = [];
 
@@ -68,4 +72,41 @@ class Sage
         }
         throw new RuntimeException("Unsupported input");
     }
+
+    
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): Sage
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): Sage
+    {
+        $this->title = $title;
+        return $this;
+    }
+
+    public function getAbout(): string
+    {
+        return $this->about;
+    }
+
+    public function setAbout(string $about): Sage
+    {
+        $this->about = $about;
+        return $this;
+    }
+
+
 }
