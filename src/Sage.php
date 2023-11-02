@@ -25,6 +25,11 @@ class Sage
     {
         return isset($this->repositories[$name]);
     }
+
+    public function getRepositories(): array
+    {
+        return $this->repositories;
+    }
     
     public function getRepository(string $name): RepositoryInterface
     {
