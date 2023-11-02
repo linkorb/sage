@@ -36,7 +36,7 @@ abstract class AbstractRepository
         return $records[0];
     }
 
-    public function rows2records(array $rows): array
+    protected function rows2records(array $rows): array
     {
         $records = [];
         foreach ($rows as $row) {

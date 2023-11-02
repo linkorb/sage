@@ -10,6 +10,11 @@ use Psr\SimpleCache\CacheInterface;
 
 class CacheRepository extends AbstractRepository implements RepositoryInterface
 {
+    protected $name;
+    protected $sage;
+    protected $cache;
+    protected $repository;
+
     public function __construct(Sage $sage, CacheInterface $cache, RepositoryInterface $repository, string $name)
     {
         $this->sage = $sage;

@@ -9,6 +9,10 @@ use RuntimeException;
 
 class NdJsonRepository extends AbstractRepository implements RepositoryInterface
 {
+    protected $name;
+    protected $sage;
+    protected $filename;
+    
     public function __construct(Sage $sage, string $filename, string $name)
     {
         $this->sage = $sage;
@@ -16,7 +20,7 @@ class NdJsonRepository extends AbstractRepository implements RepositoryInterface
         $this->name = $name;
     }
     
-    public function getRowsWhere(array $conditions = []): array
+    protected function getRowsWhere(array $conditions = []): array
     {
         $fp = fopen($this->filename, 'r');
         if (!$fp) {

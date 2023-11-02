@@ -8,6 +8,10 @@ use Sage\Exception;
 
 class PdoRepository extends AbstractRepository implements RepositoryInterface
 {
+    protected $name;
+    protected $sage;
+    protected $pdo;
+
     public function __construct(Sage $sage, PDO $pdo, string $name)
     {
         $this->sage = $sage;
@@ -15,7 +19,7 @@ class PdoRepository extends AbstractRepository implements RepositoryInterface
         $this->name = $name;
     }
     
-    public function getRowsWhere(array $conditions = []): array
+    protected function getRowsWhere(array $conditions = []): array
     {
         $where = $this->buildWhere($conditions);
 

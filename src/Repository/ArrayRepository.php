@@ -9,6 +9,10 @@ use RuntimeException;
 
 class ArrayRepository extends AbstractRepository implements RepositoryInterface
 {
+    protected $sage;
+    protected $rows;
+    protected $name;
+    
     public function __construct(Sage $sage, array $rows, string $name)
     {
         $this->sage = $sage;
@@ -16,7 +20,7 @@ class ArrayRepository extends AbstractRepository implements RepositoryInterface
         $this->name = $name;
     }
     
-    public function getRowsWhere(array $conditions = []): array
+    protected function getRowsWhere(array $conditions = []): array
     {
         $res = [];
         foreach ($this->rows as $row) {
