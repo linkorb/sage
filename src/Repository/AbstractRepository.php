@@ -66,7 +66,7 @@ abstract class AbstractRepository
         $match = true;
         foreach ($conditions as $condition) {
             $value = (string)trim($condition->getValue());
-            $fieldValue = (string)trim($row[$condition->getFieldName()]);
+            $fieldValue = (string)trim($row[$condition->getFieldName()] ?? null);
             switch ($condition->getOperator()) {
                 case '==':
                     if ($fieldValue == $value) {

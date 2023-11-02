@@ -42,6 +42,11 @@ class ManyToOne implements VirtualFieldInterface
     public function resolve(Record $record)
     {
         $remoteRepo = $this->sage->getRepository($this->remoteTypeName);
+
+        if (!isset($record[$this->localKey])) {
+            return null;
+        }
+
         $records = $remoteRepo->findAll([new Condition($this->remoteFieldName, '==', $record[$this->localKey])]);
         if (count($records)>0) {
             return $records[0];
