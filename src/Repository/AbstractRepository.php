@@ -3,16 +3,31 @@
 namespace Sage\Repository;
 
 use Sage\Record;
+use Sage\View;
 use Sage\Exception;
 
 abstract class AbstractRepository
 {
     protected $name;
+    protected $schema;
+    protected $views = [];
     
     public function getName(): string
     {
         return $this->name;
     }
+
+    public function getSchema(): array
+    {
+        return $this->schema;
+    }
+
+    public function setSchema(array $schema): void
+    {
+        $this->schema = $schema;
+    }
+
+    abstract protected function getRowsWhere(array $conditions = []): array;
 
     public function findAll(array $conditions = []): array
     {
@@ -74,5 +89,17 @@ abstract class AbstractRepository
         }
         return $match;
     }
+
+
+    public function getViews(): array
+    {
+        return $this->views;
+    }
+
+    public function addView(View $view): void
+    {
+        $this->views[$view->getName()] = $view;
+    }
+
 
 }
