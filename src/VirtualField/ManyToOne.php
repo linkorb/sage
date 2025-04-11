@@ -8,6 +8,36 @@ use Sage\Repository\Condition;
 
 class ManyToOne implements VirtualFieldInterface
 {
+    /**
+     * @var Sage
+     */
+    private $sage;
+
+    /**
+     * @var mixed|string
+     */
+    private $typeName;
+
+    /**
+     * @var mixed|string
+     */
+    private $fieldName;
+
+    /**
+     * @var string
+     */
+    private $localKey;
+
+    /**
+     * @var mixed|string
+     */
+    private $remoteTypeName;
+
+    /**
+     * @var mixed|string
+     */
+    private $remoteFieldName;
+
     public function __construct(Sage $sage, string $fqfn, string $localKey, string $remoteFqfn)
     {
         $this->sage = $sage;

@@ -7,6 +7,21 @@ use ArrayAccess;
 
 class Record implements ArrayAccess
 {
+    /**
+     * @var Sage
+     */
+    private $sage;
+
+    /**
+     * @var string
+     */
+    private $typeName;
+
+    /**
+     * @var mixed
+     */
+    private $data;
+
     public function __construct(Sage $sage, string $typeName, $data)
     {
         $this->sage = $sage;
