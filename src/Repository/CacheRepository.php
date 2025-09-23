@@ -2,27 +2,19 @@
 
 namespace Sage\Repository;
 
-use PDO;
 use Sage\Sage;
-use Sage\Exception;
-use RuntimeException;
 use Psr\SimpleCache\CacheInterface;
 
 class CacheRepository extends AbstractRepository implements RepositoryInterface
 {
-    protected $name;
-    protected $sage;
-    protected $cache;
-    protected $repository;
-
-    public function __construct(Sage $sage, CacheInterface $cache, RepositoryInterface $repository, string $name)
-    {
-        $this->sage = $sage;
-        $this->cache = $cache;
-        $this->repository = $repository;
-        $this->name = $name;
+    public function __construct(
+        protected Sage $sage,
+        protected CacheInterface $cache,
+        protected RepositoryInterface $repository,
+        protected string $name
+    ) {
     }
-    
+
     protected function getRowsWhere(array $conditions = []): array
     {
         $cacheKey = 'repository:' . $this->getName();

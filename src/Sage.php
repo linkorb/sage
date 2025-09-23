@@ -2,9 +2,10 @@
 
 namespace Sage;
 
+use Sage\Exception\RepositoryNotFoundException;
+use Sage\Exception\VirtualFieldNotFoundException;
 use Sage\Repository\RepositoryInterface;
 use Sage\VirtualField\VirtualFieldInterface;
-use Sage\Exception;
 
 class Sage
 {
@@ -12,10 +13,10 @@ class Sage
     protected $title;
     protected $about;
 
-    protected $repositories = [];
-    protected $virtualFields = [];
+    protected array $repositories = [];
+    protected array $virtualFields = [];
 
-    public function addRepository(RepositoryInterface $repo)
+    public function addRepository(RepositoryInterface $repo): void
     {
         $this->repositories[$repo->getName()] = $repo;
     }
@@ -30,7 +31,10 @@ class Sage
     {
         return $this->repositories;
     }
-    
+
+    /**
+     * @throws RepositoryNotFoundException
+     */
     public function getRepository(string $name): RepositoryInterface
     {
         if (!$this->hasRepository($name)) {
@@ -39,12 +43,12 @@ class Sage
         return $this->repositories[$name];
     }
 
-    public function addVirtualField(VirtualFieldInterface $field)
+    public function addVirtualField(VirtualFieldInterface $field): void
     {
         $this->virtualFields[$field->getTypeName()][$field->getFieldName()] = $field;
     }
 
-    public function hasVirtualField($typeName, $fieldName)
+    public function hasVirtualField($typeName, $fieldName): bool
     {
         return isset($this->virtualFields[$typeName][$fieldName]);
     }
@@ -52,12 +56,12 @@ class Sage
     public function getVirtualField($typeName, $fieldName)
     {
         if (!$this->hasVirtualField($typeName, $fieldName)) {
-            throw new Exception\VirtualFieldNotFound($typeName . '.' , $fieldName);
+            throw new VirtualFieldNotFoundException($typeName . '.' , $fieldName);
         }
         return $this->virtualFields[$typeName][$fieldName];
     }
 
-    public function dump($data)
+    public function dump($data): void
     {
         if (is_null($data)) {
             echo "#NULL#" . PHP_EOL;
@@ -75,10 +79,10 @@ class Sage
             }
             return;
         }
-        throw new RuntimeException("Unsupported input");
+        throw new \RuntimeException("Unsupported input");
     }
 
-    
+
 
     public function getName(): string
     {

@@ -8,10 +8,10 @@ use Sage\Exception;
 
 abstract class AbstractRepository
 {
-    protected $name;
-    protected $schema;
-    protected $views = [];
-    
+    protected string $name;
+    protected array $schema;
+    protected array $views = [];
+
     public function getName(): string
     {
         return $this->name;
@@ -100,6 +100,4 @@ abstract class AbstractRepository
     {
         $this->views[$view->getName()] = $view;
     }
-
-
 }

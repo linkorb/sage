@@ -2,18 +2,15 @@
 
 namespace Sage;
 
-use Sage\Exception;
-
-class View  
+class View
 {
-    protected $name;
-    protected $label;
-    protected $template;
-    protected $default = false;
-
-    public function __construct(string $name)
+    public function __construct(
+        protected string $name,
+        protected ?string $label = null,
+        protected ?string $template = null,
+        protected bool $default = false,
+    )
     {
-        $this->name = $name;
     }
 
     public function getName(): string
@@ -51,6 +48,4 @@ class View
     {
         return $this->default;
     }
-
-    
 }

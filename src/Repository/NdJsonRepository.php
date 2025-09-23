@@ -2,24 +2,23 @@
 
 namespace Sage\Repository;
 
-use PDO;
+use Sage\Exception\UnsupportedOperatorException;
 use Sage\Sage;
-use Sage\Exception;
 use RuntimeException;
 
 class NdJsonRepository extends AbstractRepository implements RepositoryInterface
 {
-    protected $name;
-    protected $sage;
-    protected $filename;
-    
-    public function __construct(Sage $sage, string $filename, string $name)
+    public function __construct(
+        private Sage $sage,
+        private readonly string $filename,
+        protected string $name
+    )
     {
-        $this->sage = $sage;
-        $this->filename = $filename;
-        $this->name = $name;
     }
-    
+
+    /**
+     * @throws UnsupportedOperatorException
+     */
     protected function getRowsWhere(array $conditions = []): array
     {
         $fp = fopen($this->filename, 'r');
