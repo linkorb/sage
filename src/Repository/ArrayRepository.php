@@ -2,24 +2,21 @@
 
 namespace Sage\Repository;
 
-use PDO;
+use Sage\Exception\UnsupportedOperatorException;
 use Sage\Sage;
-use Sage\Exception;
-use RuntimeException;
 
 class ArrayRepository extends AbstractRepository implements RepositoryInterface
 {
-    protected $sage;
-    protected $rows;
-    protected $name;
-    
-    public function __construct(Sage $sage, array $rows, string $name)
-    {
-        $this->sage = $sage;
-        $this->rows = $rows;
-        $this->name = $name;
+    public function __construct(
+        protected Sage $sage,
+        protected array $rows,
+        protected string $name
+    ) {
     }
-    
+
+    /**
+     * @throws UnsupportedOperatorException
+     */
     protected function getRowsWhere(array $conditions = []): array
     {
         $res = [];

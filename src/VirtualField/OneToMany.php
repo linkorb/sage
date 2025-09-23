@@ -2,74 +2,52 @@
 
 namespace Sage\VirtualField;
 
+use Sage\Exception\RepositoryNotFoundException;
 use Sage\Sage;
 use Sage\Record;
 use Sage\Repository\Condition;
 
 class OneToMany implements VirtualFieldInterface
 {
-    /**
-     * @var Sage
-     */
-    private $sage;
+    private string $typeName;
+    private string $fieldName;
+    private string $remoteTypeName;
+    private string $remoteFieldName;
 
-    /**
-     * @var mixed|string
-     */
-    private $typeName;
-
-    /**
-     * @var mixed|string
-     */
-    private $fieldName;
-
-    /**
-     * @var string
-     */
-    private $localKey;
-
-    /**
-     * @var mixed|string
-     */
-    private $remoteTypeName;
-
-    /**
-     * @var mixed|string
-     */
-    private $remoteFieldName;
-
-    public function __construct(Sage $sage, string $fqfn, string $localKey, string $remoteFqfn)
-    {
-
-        $this->sage = $sage;
-
+    public function __construct(
+        private readonly Sage $sage,
+        string $fqfn,
+        private readonly string $localKey,
+        string $remoteFqfn
+    ) {
         $part = explode('.', $fqfn);
         if (count($part)!=2) {
-            throw new InvalidArgumentException($fqfn);
+            throw new \InvalidArgumentException($fqfn);
         }
         $this->typeName = $part[0];
         $this->fieldName = $part[1];
 
-        $this->localKey = $localKey;
-
         $part = explode('.', $remoteFqfn);
         if (count($part)!=2) {
-            throw new InvalidArgumentException($remoteFqfn);
+            throw new \InvalidArgumentException($remoteFqfn);
         }
         $this->remoteTypeName = $part[0];
         $this->remoteFieldName = $part[1];
     }
 
-    public function getTypeName()
+    public function getTypeName(): string
     {
         return $this->typeName;
     }
-    public function getFieldName()
+    public function getFieldName(): string
     {
         return $this->fieldName;
     }
 
-    public function resolve(Record $record)
+    /**
+     * @throws RepositoryNotFoundException
+     */
+    public function resolve(Record $record): ?array
     {
         $remoteRepo = $this->sage->getRepository($this->remoteTypeName);
 

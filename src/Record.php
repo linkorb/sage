@@ -2,34 +2,21 @@
 
 namespace Sage;
 
-use Sage\Exception;
 use ArrayAccess;
+use Sage\Exception\FieldNotFoundException;
+use Sage\Exception\VirtualFieldNotFoundException;
 
 class Record implements ArrayAccess
 {
-    /**
-     * @var Sage
-     */
-    private $sage;
 
-    /**
-     * @var string
-     */
-    private $typeName;
-
-    /**
-     * @var mixed
-     */
-    private $data;
-
-    public function __construct(Sage $sage, string $typeName, $data)
-    {
-        $this->sage = $sage;
-        $this->typeName = $typeName;
-        $this->data = $data;
+    public function __construct(
+        private readonly Sage $sage,
+        private readonly string $typeName,
+        private array $data
+    ) {
     }
 
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         if ($this->sage->hasVirtualField($this->typeName, $offset)) {
             return true;
@@ -40,7 +27,11 @@ class Record implements ArrayAccess
         return false;
     }
 
-    public function offsetGet($offset)
+    /**
+     * @throws VirtualFieldNotFoundException
+     * @throws FieldNotFoundException
+     */
+    public function offsetGet($offset): mixed
     {
         if ($this->sage->hasVirtualField($this->typeName, $offset)) {
             $field = $this->sage->getVirtualField($this->typeName, $offset);
@@ -52,22 +43,22 @@ class Record implements ArrayAccess
         throw new Exception\FieldNotFoundException($this->typeName . '.' . $offset);
     }
 
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         $this->data[$offset] = $value;
-        return $this;
     }
-    public function offsetUnset($offset)
+
+    public function offsetUnset($offset): void
     {
         unset($this->data[$offset]);
     }
 
-    public function getData()
+    public function getData(): array
     {
         return $this->data;
     }
 
-    public function getKeys()
+    public function getKeys(): array
     {
         return array_keys($this->data);
     }

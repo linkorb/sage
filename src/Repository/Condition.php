@@ -4,26 +4,12 @@ namespace Sage\Repository;
 
 class Condition
 {
-    /**
-     * @var string|string
-     */
-    private $fieldName;
-
-    /**
-     * @var mixed
-     */
-    private $operator;
-
-    /**
-     * @var mixed
-     */
-    private $value;
-
-    public function __construct(string $fieldName, $operator, $value)
+    public function __construct(
+        private readonly string $fieldName,
+        private readonly string $operator,
+        private $value
+    )
     {
-        $this->fieldName = $fieldName;
-        $this->operator = $operator;
-        $this->value = $value;
     }
 
     public function getFieldName(): string
@@ -45,5 +31,4 @@ class Condition
     {
         return $this->getFieldName() . $this->getOperator() . $this->getValue();
     }
-    
 }

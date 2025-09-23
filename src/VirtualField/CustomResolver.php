@@ -8,12 +8,11 @@ use InvalidArgumentException;
 
 class CustomResolver implements VirtualFieldInterface
 {
-    protected $typeName;
-    protected $fieldName;
+    protected string $typeName;
+    protected string $fieldName;
     protected $resolver;
 
-    public function __construct(Sage $sage, string $fqfn, callable $resolver)
-    {
+    public function __construct(Sage $sage, string $fqfn, callable $resolver) {
         $part = explode('.', $fqfn);
         if (count($part)!=2) {
             throw new InvalidArgumentException($fqfn);
@@ -23,12 +22,12 @@ class CustomResolver implements VirtualFieldInterface
         $this->resolver = $resolver;
     }
 
-    public function getTypeName()
+    public function getTypeName(): string
     {
         return $this->typeName;
     }
 
-    public function getFieldName()
+    public function getFieldName(): string
     {
         return $this->fieldName;
     }
